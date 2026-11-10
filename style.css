@@ -113,16 +113,62 @@ button:focus-visible { outline: 3px solid #7ab0d0; outline-offset: 2px; }
     display: grid;
     grid-template-columns: 1.8fr 1fr 1.2fr;
     margin-top: 40px;
-    padding-top: 28px;
-    border-top: 1px solid var(--vonal);
 }
 #termek-also > div { padding: 0 24px; }
 #termek-also > div:first-child { padding-left: 0; }
 #termek-also > div + div { border-left: 1px solid var(--vonal); }
 #termek-also h3 { margin: 0 0 14px; font-size: 1.2rem; }
 
-#hosszu-leiras { font-size: 1.05rem; color: #34414d; }
+/* fülek */
+.fulek {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--vonal);
+}
+.ful {
+    background: none;
+    border: 0;
+    border-bottom: 3px solid transparent;
+    border-radius: 0;
+    padding: 12px 14px;
+    font-size: 1.05rem;
+    font-weight: 400;
+    color: var(--szoveg);
+}
+.ful:hover { color: var(--kek); }
+.ful.aktiv {
+    color: var(--kek);
+    font-weight: 600;
+    border-bottom-color: var(--kek);
+}
 
+/* panelek: egyszerre csak az aktív látszik */
+.panel { display: none; }
+.panel.aktiv { display: block; }
+
+#hosszu-leiras { margin: 0 0 24px; font-size: 1.05rem; color: #34414d; }
+
+.kartyak { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.kartya {
+    background: var(--hatter);
+    border-radius: 6px;
+    padding: 16px 8px;
+    text-align: center;
+    font-size: 0.95rem;
+}
+
+/* tulajdonságok táblázat */
+#tulajdonsagok { width: 100%; border-collapse: collapse; }
+#tulajdonsagok th,
+#tulajdonsagok td {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--vonal);
+}
+#tulajdonsagok th { width: 40%; color: var(--halvany); font-weight: 600; }
+
+/* főbb jellemzők lista */
 #jellemzok {
     list-style: none;
     margin: 0;
@@ -147,3 +193,49 @@ button:focus-visible { outline: 3px solid #7ab0d0; outline-offset: 2px; }
     width: 40px;
     height: 40px;
     border-radius: 50%;
+    background: var(--halvany);
+    color: #fff;
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+}
+.velemeny .csillag { color: #f5b301; font-size: 0.9rem; letter-spacing: 2px; }
+.velemeny p { margin: 2px 0 0; }
+
+/* ---------- Hasonló termékek ---------- */
+#hasonlo {
+    margin-top: 40px;
+    padding: 24px;
+    background: var(--hatter);
+    border-radius: 6px;
+}
+.hasonlo-fej {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+.hasonlo-fej h3 { margin: 0; font-size: 1.2rem; }
+.hasonlo-fej a { color: var(--kek); }
+
+.hasonlo-lista { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.hasonlo-kartya {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: #fff;
+    border: 1px solid var(--vonal);
+    border-radius: 6px;
+    padding: 16px;
+}
+
+/* ---------- Ikonok ---------- */
+button i { margin-right: 6px; }
+
+.gyarto i { margin-right: 8px; color: var(--kek); }
+
+.kartya i { display: block; font-size: 1.8rem; margin-bottom: 6px; }
+
+#jellemzok li i { margin-right: 12px; color: var(--halvany); }
+
+.hasonlo-kartya i {

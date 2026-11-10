@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Termékek</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -26,26 +27,48 @@
                 <p id="termek-ar"></p>
                 <p id="termek-keszlet"></p>
                 <div class="gombok">
-                    <button id="kosar-gomb">Kosárba</button>
-                    <button id="kedvenc-gomb">Kedvencekhez</button>
+                    <button id="kosar-gomb"><i class="bi bi-cart3"></i> Kosárba</button>
+                    <button id="kedvenc-gomb"><i class="bi bi-heart"></i> Kedvencekhez</button>
                 </div>
             </div>
 
             <aside class="gyarto">
-                <p>Gyártó: <strong id="gyarto-nev"></strong></p>
-                <p>Származási ország: <strong id="gyarto-orszag"></strong></p>
-                <p>Garancia: <strong>2 év</strong></p>
-                <p>Szállítás: <strong>1-3 munkanap</strong></p>
+                <p><i class="bi bi-building"></i> Gyártó: <strong id="gyarto-nev"></strong></p>
+                <p><i class="bi bi-globe2"></i> Származási ország: <strong id="gyarto-orszag"></strong></p>
+                <p><i class="bi bi-shield-check"></i> Garancia: <strong>2 év</strong></p>
+                <p><i class="bi bi-truck"></i> Szállítás: <strong>1-3 munkanap</strong></p>
             </aside>
 
         </section>
 
-        <!-- alsó rész: leírás, főbb jellemzők, vélemények -->
+        <!-- alsó rész -->
         <section id="termek-also">
 
-            <div class="leiras-resz">
-                <h3>Leírás</h3>
-                <p id="hosszu-leiras"></p>
+            <!-- bal oszlop: fülek -->
+            <div class="bal-resz">
+                <div class="fulek">
+                    <button class="ful aktiv" data-ful="ful-leiras">Leírás</button>
+                    <button class="ful" data-ful="ful-tulajdonsagok">Tulajdonságok</button>
+                    <button class="ful" data-ful="ful-velemenyek">Vélemények (<span id="velemeny-db">0</span>)</button>
+                </div>
+
+                <div id="ful-leiras" class="panel aktiv">
+                    <p id="hosszu-leiras"></p>
+                    <div class="kartyak">
+                        <div class="kartya"><i class="bi bi-lightning-charge"></i>Kiemelkedő teljesítmény</div>
+                        <div class="kartya"><i class="bi bi-controller"></i>Tökéletes játékélmény</div>
+                        <div class="kartya"><i class="bi bi-display"></i>Lenyűgöző kijelző</div>
+                        <div class="kartya"><i class="bi bi-gear-wide-connected"></i>Fejlesztéshez ideális</div>
+                    </div>
+                </div>
+
+                <div id="ful-tulajdonsagok" class="panel">
+                    <table id="tulajdonsagok"></table>
+                </div>
+
+                <div id="ful-velemenyek" class="panel">
+                    <div id="velemenyek-ful"></div>
+                </div>
             </div>
 
             <div class="jellemzok-resz">
@@ -59,6 +82,8 @@
             </div>
 
         </section>
+
+        
     </main>
 
     <script src="main.js"></script>

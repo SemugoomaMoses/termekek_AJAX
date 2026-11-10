@@ -5,12 +5,67 @@ function hibaMegjelenit(uzenet) {
     hiba.style.display = "block";
     document.getElementById("termek-felso").style.display = "none";
     document.getElementById("termek-also").style.display = "none";
+    document.getElementById("hasonlo").style.display = "none";
 }
 
 // Csillagok szöveggel: pl. 4.8 -> ★★★★★
 function csillagok(pont) {
     var egesz = Math.round(pont);
     return "★".repeat(egesz) + "☆".repeat(5 - egesz);
+}
+
+// A jellemző szövege alapján kiválasztja a megfelelő ikont
+function ikonValaszt(szoveg) {
+    var s = szoveg.toLowerCase();
+    if (s.includes("core") || s.includes("ryzen") || s.includes("processzor")) return "bi-cpu";
+    if (s.includes("ram")) return "bi-memory";
+    if (s.includes("ssd") || s.includes("hdd")) return "bi-device-hdd";
+    if (s.includes("rtx") || s.includes("gtx") || s.includes("radeon")) return "bi-gpu-card";
+    if (s.includes("kijelző") || s.includes("hz")) return "bi-display";
+    if (s.includes("windows")) return "bi-windows";
+    return "bi-check2-circle";   // ha egyik sem illik
+}
+
+// Egy vélemény doboz elkészítése (kétszer használjuk, ezért külön függvény)
+function velemenyKeszit(v) {
+    var doboz = document.createElement("div");
+    doboz.className = "velemeny";
+
+    var avatar = document.createElement("span");
+    avatar.className = "avatar";
+    avatar.textContent = v.user.charAt(0);
+
+    var tartalom = document.createElement("div");
+
+    var nev = document.createElement("strong");
+    nev.textContent = v.user;
+
+    var csillag = document.createElement("div");
+    csillag.className = "csillag";
+    csillag.textContent = "★★★★★";
+
+    var szoveg = document.createElement("p");
+    szoveg.textContent = v.comment;
+
+    tartalom.appendChild(nev);
+    tartalom.appendChild(csillag);
+    tartalom.appendChild(szoveg);
+
+    doboz.appendChild(avatar);
+    doboz.appendChild(tartalom);
+    return doboz;
+}
+
+// Egy táblázatsor elkészítése (bal oldali cella + jobb oldali cella)
+function sorKeszit(kulcs, ertek) {
+    var sor = document.createElement("tr");
+    var th = document.createElement("th");
+    var td = document.createElement("td");
+    th.textContent = kulcs;
+    td.textContent = ertek;
+    sor.appendChild(th);
+    sor.appendChild(td);
+    return sor;
 }
 
 // Bélyegkép kattintás: a nagy képre kerül, a kijelölés átvándorol
@@ -21,6 +76,30 @@ function belyegKattintas() {
         mind[i].className = "";
     }
     this.className = "aktiv";
+}
+
+// Fülváltás: a kattintott fül és a hozzá tartozó panel válik aktívvá
+function fulValtas() {
+    var fulek = document.querySelectorAll(".ful");
+    var panelek = document.querySelectorAll(".panel");
+
+    for (var i = 0; i < fulek.length; i++) {
+        fulek[i].classList.remove("aktiv");
+    }
+    for (var j = 0; j < panelek.length; j++) {
+        panelek[j].classList.remove("aktiv");
+    }
+
+    this.classList.add("aktiv");
+    document.getElementById(this.dataset.ful).classList.add("aktiv");
+}
+
+// A fülekre rákötjük a kattintás figyelését
+function fulekInicializal() {
+    var fulek = document.querySelectorAll(".ful");
+    for (var i = 0; i < fulek.length; i++) {
+        fulek[i].addEventListener("click", fulValtas);
+    }
 }
 
 // A beolvasott objektum adatainak kiírása az oldalra
@@ -63,46 +142,42 @@ function termekMegjelenit(t) {
         belyegek.appendChild(kep);
     }
 
-    // alsó rész: leírás
+    // 1. fül: Leírás
     document.getElementById("hosszu-leiras").textContent = t.description;
 
-    // főbb jellemzők (tömb bejárása)
+    // 2. fül: Tulajdonságok (táblázat)
+    var tabla = document.getElementById("tulajdonsagok");
+    tabla.appendChild(sorKeszit("Gyártó", t.manufacturer.name));
+    tabla.appendChild(sorKeszit("Származási ország", t.manufacturer.country));
+    tabla.appendChild(sorKeszit("Készlet", t.stock + " db"));
+    for (var f = 0; f < t.features.length; f++) {
+        tabla.appendChild(sorKeszit("Jellemző " + (f + 1), t.features[f]));
+    }
+
+    // 3. fül: Vélemények
+    document.getElementById("velemeny-db").textContent = t.reviews.length;
+    var fulVelemenyek = document.getElementById("velemenyek-ful");
+    for (var r = 0; r < t.reviews.length; r++) {
+        fulVelemenyek.appendChild(velemenyKeszit(t.reviews[r]));
+    }
+
+    // jobb oldali oszlopok: főbb jellemzők (ikonnal)
     var lista = document.getElementById("jellemzok");
     for (var i = 0; i < t.features.length; i++) {
         var li = document.createElement("li");
-        li.textContent = t.features[i];
+
+        var ikon = document.createElement("i");
+        ikon.className = "bi " + ikonValaszt(t.features[i]);
+
+        li.appendChild(ikon);
+        li.appendChild(document.createTextNode(t.features[i]));
         lista.appendChild(li);
     }
 
-    // vélemények (objektumok tömbje)
+    // jobb oldali oszlopok: vásárlói vélemények
     var velemenyek = document.getElementById("velemenyek");
     for (var j = 0; j < t.reviews.length; j++) {
-        var doboz = document.createElement("div");
-        doboz.className = "velemeny";
-
-        var avatar = document.createElement("span");
-        avatar.className = "avatar";
-        avatar.textContent = t.reviews[j].user.charAt(0);
-
-        var tartalom = document.createElement("div");
-
-        var nev = document.createElement("strong");
-        nev.textContent = t.reviews[j].user;
-
-        var csillag = document.createElement("div");
-        csillag.className = "csillag";
-        csillag.textContent = "★★★★★";
-
-        var szoveg = document.createElement("p");
-        szoveg.textContent = t.reviews[j].comment;
-
-        tartalom.appendChild(nev);
-        tartalom.appendChild(csillag);
-        tartalom.appendChild(szoveg);
-
-        doboz.appendChild(avatar);
-        doboz.appendChild(tartalom);
-        velemenyek.appendChild(doboz);
+        velemenyek.appendChild(velemenyKeszit(t.reviews[j]));
     }
 }
 
@@ -131,5 +206,8 @@ function termekBetolt() {
     xhr.send();
 }
 
-// Az oldal betöltődésekor indul a kérés
-window.addEventListener("load", termekBetolt);
+// Az oldal betöltődésekor indul a kérés, és életre kelnek a fülek
+window.addEventListener("load", function () {
+    fulekInicializal();
+    termekBetolt();
+});
