@@ -9,10 +9,9 @@
 </head>
 <body>
     <main>
-        <!-- ide jön a hibaüzenet, ha nem sikerül a betöltés -->
+  
         <div id="hiba"></div>
 
-        <!-- felső rész: kép + név + ár + gombok -->
         <section id="termek-felso">
 
             <div class="kep-resz">
@@ -21,6 +20,7 @@
             </div>
 
             <div class="adatok">
+                <span class="uj">ÚJ</span>
                 <h1 id="termek-nev"></h1>
                 <p id="termek-leiras"></p>
                 <p id="termek-ertekeles"></p>
@@ -41,10 +41,9 @@
 
         </section>
 
-        <!-- alsó rész -->
+
         <section id="termek-also">
 
-            <!-- bal oszlop: fülek -->
             <div class="bal-resz">
                 <div class="fulek">
                     <button class="ful aktiv" data-ful="ful-leiras">Leírás</button>
@@ -79,6 +78,7 @@
             <div class="velemenyek-resz">
                 <h3>Vásárlói vélemények</h3>
                 <div id="velemenyek"></div>
+                 <a href="#" id="osszes-velemeny" class="osszes">Összes vélemény megtekintése <i class="bi bi-arrow-right"></i></a>
             </div>
 
         </section>

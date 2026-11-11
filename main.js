@@ -1,4 +1,4 @@
-// Hibaüzenet megjelenítése, a termék részeinek elrejtése
+
 function hibaMegjelenit(uzenet) {
     var hiba = document.getElementById("hiba");
     hiba.textContent = uzenet;
@@ -8,13 +8,13 @@ function hibaMegjelenit(uzenet) {
     document.getElementById("hasonlo").style.display = "none";
 }
 
-// Csillagok szöveggel: pl. 4.8 -> ★★★★★
+
 function csillagok(pont) {
     var egesz = Math.round(pont);
     return "★".repeat(egesz) + "☆".repeat(5 - egesz);
 }
 
-// A jellemző szövege alapján kiválasztja a megfelelő ikont
+
 function ikonValaszt(szoveg) {
     var s = szoveg.toLowerCase();
     if (s.includes("core") || s.includes("ryzen") || s.includes("processzor")) return "bi-cpu";
@@ -26,7 +26,7 @@ function ikonValaszt(szoveg) {
     return "bi-check2-circle";   // ha egyik sem illik
 }
 
-// Egy vélemény doboz elkészítése (kétszer használjuk, ezért külön függvény)
+
 function velemenyKeszit(v) {
     var doboz = document.createElement("div");
     doboz.className = "velemeny";
@@ -56,7 +56,6 @@ function velemenyKeszit(v) {
     return doboz;
 }
 
-// Egy táblázatsor elkészítése (bal oldali cella + jobb oldali cella)
 function sorKeszit(kulcs, ertek) {
     var sor = document.createElement("tr");
     var th = document.createElement("th");
@@ -68,7 +67,7 @@ function sorKeszit(kulcs, ertek) {
     return sor;
 }
 
-// Bélyegkép kattintás: a nagy képre kerül, a kijelölés átvándorol
+
 function belyegKattintas() {
     document.getElementById("termek-kep").src = this.src;
     var mind = document.querySelectorAll("#belyegek img");
@@ -78,7 +77,7 @@ function belyegKattintas() {
     this.className = "aktiv";
 }
 
-// Fülváltás: a kattintott fül és a hozzá tartozó panel válik aktívvá
+
 function fulValtas() {
     var fulek = document.querySelectorAll(".ful");
     var panelek = document.querySelectorAll(".panel");
@@ -94,19 +93,26 @@ function fulValtas() {
     document.getElementById(this.dataset.ful).classList.add("aktiv");
 }
 
-// A fülekre rákötjük a kattintás figyelését
+
+
 function fulekInicializal() {
     var fulek = document.querySelectorAll(".ful");
     for (var i = 0; i < fulek.length; i++) {
         fulek[i].addEventListener("click", fulValtas);
     }
+
+    // "Összes vélemény megtekintése": átvált a Vélemények fülre
+    document.getElementById("osszes-velemeny").addEventListener("click", function (e) {
+        e.preventDefault();   // ne ugorjon az oldal tetejére
+        document.querySelector('.ful[data-ful="ful-velemenyek"]').click();
+    });
 }
 
-// A beolvasott objektum adatainak kiírása az oldalra
+
 function termekMegjelenit(t) {
     document.title = t.name;
 
-    // felső rész
+
     document.getElementById("termek-kep").src = t.image;
     document.getElementById("termek-kep").alt = t.name;
     document.getElementById("termek-nev").textContent = t.name;
@@ -129,7 +135,7 @@ function termekMegjelenit(t) {
     document.getElementById("gyarto-nev").textContent = t.manufacturer.name;
     document.getElementById("gyarto-orszag").textContent = t.manufacturer.country;
 
-    // bélyegképek (a JSON-ban egy kép van, ezért ugyanazt használjuk 4x)
+
     var belyegek = document.getElementById("belyegek");
     for (var k = 0; k < 4; k++) {
         var kep = document.createElement("img");
@@ -142,10 +148,10 @@ function termekMegjelenit(t) {
         belyegek.appendChild(kep);
     }
 
-    // 1. fül: Leírás
+
     document.getElementById("hosszu-leiras").textContent = t.description;
 
-    // 2. fül: Tulajdonságok (táblázat)
+
     var tabla = document.getElementById("tulajdonsagok");
     tabla.appendChild(sorKeszit("Gyártó", t.manufacturer.name));
     tabla.appendChild(sorKeszit("Származási ország", t.manufacturer.country));
@@ -154,14 +160,14 @@ function termekMegjelenit(t) {
         tabla.appendChild(sorKeszit("Jellemző " + (f + 1), t.features[f]));
     }
 
-    // 3. fül: Vélemények
+
     document.getElementById("velemeny-db").textContent = t.reviews.length;
     var fulVelemenyek = document.getElementById("velemenyek-ful");
     for (var r = 0; r < t.reviews.length; r++) {
         fulVelemenyek.appendChild(velemenyKeszit(t.reviews[r]));
     }
 
-    // jobb oldali oszlopok: főbb jellemzők (ikonnal)
+
     var lista = document.getElementById("jellemzok");
     for (var i = 0; i < t.features.length; i++) {
         var li = document.createElement("li");
@@ -174,14 +180,14 @@ function termekMegjelenit(t) {
         lista.appendChild(li);
     }
 
-    // jobb oldali oszlopok: vásárlói vélemények
+
     var velemenyek = document.getElementById("velemenyek");
     for (var j = 0; j < t.reviews.length; j++) {
         velemenyek.appendChild(velemenyKeszit(t.reviews[j]));
     }
 }
 
-// AJAX kérés
+
 function termekBetolt() {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "termek.json", true);
@@ -206,7 +212,6 @@ function termekBetolt() {
     xhr.send();
 }
 
-// Az oldal betöltődésekor indul a kérés, és életre kelnek a fülek
 window.addEventListener("load", function () {
     fulekInicializal();
     termekBetolt();

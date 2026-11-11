@@ -1,4 +1,4 @@
-/* ---------- Alapok ---------- */
+
 :root {
     --kek: #0b63e5;
     --szoveg: #1c2733;
@@ -15,10 +15,23 @@ body {
     color: var(--szoveg);
     line-height: 1.5;
 }
+.uj {
+    display: inline-block;
+    margin-bottom: 8px;
+    padding: 2px 10px;
+    background: var(--kek);
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    border-radius: 4px;
+}
+
+.osszes { color: var(--kek); text-decoration: underline; }
+.osszes:hover { color: #0a54c2; }
 
 main { max-width: 1180px; margin: 0 auto; padding: 40px 16px 48px; }
 
-/* ---------- Hibaüzenet (alapból rejtett) ---------- */
 #hiba {
     display: none;
     background: #fdecea;
@@ -29,7 +42,6 @@ main { max-width: 1180px; margin: 0 auto; padding: 40px 16px 48px; }
     font-weight: 600;
 }
 
-/* ---------- Felső rész ---------- */
 #termek-felso {
     display: grid;
     grid-template-columns: 1.5fr 1.4fr 1fr;
@@ -37,7 +49,7 @@ main { max-width: 1180px; margin: 0 auto; padding: 40px 16px 48px; }
     align-items: start;
 }
 
-/* kép + bélyegképek */
+
 .kep-resz {
     display: grid;
     grid-template-columns: 1fr 80px;
@@ -79,7 +91,7 @@ main { max-width: 1180px; margin: 0 auto; padding: 40px 16px 48px; }
 #termek-keszlet.van   { background: #dff3e6; color: #1a8a4a; }
 #termek-keszlet.nincs { background: #fdecea; color: #b3261e; }
 
-/* gombok */
+
 button {
     padding: 14px 24px;
     font-size: 1.05rem;
@@ -89,26 +101,49 @@ button {
 }
 button:focus-visible { outline: 3px solid #7ab0d0; outline-offset: 2px; }
 
-.gombok { display: flex; gap: 12px; }
-.gombok button { flex: 1; }
-#kosar-gomb { flex: 1.5; background: var(--kek); color: #fff; border: 0; }
-#kosar-gomb:hover { background: #0a54c2; }
-#kosar-gomb:disabled { background: #9aa8b2; cursor: not-allowed; }
+.gombok { 
+    display: flex; gap: 12px; 
+}
+.gombok button { 
+    flex: 1; 
+}
+#kosar-gomb { 
+    flex: 1.5; 
+    background: var(--kek); 
+    color: #fff; border: 0; 
+}
+#kosar-gomb:hover { 
+    background: #0a54c2; 
+}
+#kosar-gomb:disabled { 
+    background: #9aa8b2; cursor: not-allowed; 
+}
 
-#kedvenc-gomb { background: #fff; color: var(--szoveg); border: 1px solid var(--vonal); }
-#kedvenc-gomb:hover { background: var(--hatter); }
+#kedvenc-gomb { 
+    background: #fff; 
+    color: var(--szoveg); 
+    border: 1px solid var(--vonal); 
+}
+#kedvenc-gomb:hover { 
+    background: var(--hatter); 
+}
 
-/* gyártói doboz */
+
 .gyarto {
     background: var(--hatter);
     border: 1px solid var(--vonal);
     border-radius: 6px;
     padding: 10px 18px;
 }
-.gyarto p { margin: 10px 0; color: var(--halvany); }
-.gyarto strong { display: block; color: var(--szoveg); font-size: 1.05rem; }
+.gyarto p { 
+    margin: 10px 0; color: var(--halvany); 
+}
+.gyarto strong { 
+    display: block; 
+    color: var(--szoveg); 
+    font-size: 1.05rem; 
+}
 
-/* ---------- Alsó rész ---------- */
 #termek-also {
     display: grid;
     grid-template-columns: 1.8fr 1fr 1.2fr;
@@ -119,7 +154,6 @@ button:focus-visible { outline: 3px solid #7ab0d0; outline-offset: 2px; }
 #termek-also > div + div { border-left: 1px solid var(--vonal); }
 #termek-also h3 { margin: 0 0 14px; font-size: 1.2rem; }
 
-/* fülek */
 .fulek {
     display: flex;
     gap: 8px;
@@ -143,7 +177,7 @@ button:focus-visible { outline: 3px solid #7ab0d0; outline-offset: 2px; }
     border-bottom-color: var(--kek);
 }
 
-/* panelek: egyszerre csak az aktív látszik */
+
 .panel { display: none; }
 .panel.aktiv { display: block; }
 
@@ -158,7 +192,6 @@ button:focus-visible { outline: 3px solid #7ab0d0; outline-offset: 2px; }
     font-size: 0.95rem;
 }
 
-/* tulajdonságok táblázat */
 #tulajdonsagok { width: 100%; border-collapse: collapse; }
 #tulajdonsagok th,
 #tulajdonsagok td {
@@ -168,7 +201,7 @@ button:focus-visible { outline: 3px solid #7ab0d0; outline-offset: 2px; }
 }
 #tulajdonsagok th { width: 40%; color: var(--halvany); font-weight: 600; }
 
-/* főbb jellemzők lista */
+
 #jellemzok {
     list-style: none;
     margin: 0;
@@ -179,7 +212,7 @@ button:focus-visible { outline: 3px solid #7ab0d0; outline-offset: 2px; }
 #jellemzok li { padding: 9px 0; }
 #jellemzok li + li { border-top: 1px solid var(--vonal); }
 
-/* vélemények: kezdőbetűs kör + csillagok */
+
 .velemeny {
     display: flex;
     gap: 12px;
@@ -202,7 +235,7 @@ button:focus-visible { outline: 3px solid #7ab0d0; outline-offset: 2px; }
 .velemeny .csillag { color: #f5b301; font-size: 0.9rem; letter-spacing: 2px; }
 .velemeny p { margin: 2px 0 0; }
 
-/* ---------- Hasonló termékek ---------- */
+
 #hasonlo {
     margin-top: 40px;
     padding: 24px;
@@ -229,7 +262,7 @@ button:focus-visible { outline: 3px solid #7ab0d0; outline-offset: 2px; }
     padding: 16px;
 }
 
-/* ---------- Ikonok ---------- */
+
 button i { margin-right: 6px; }
 
 .gyarto i { margin-right: 8px; color: var(--kek); }
@@ -238,4 +271,3 @@ button i { margin-right: 6px; }
 
 #jellemzok li i { margin-right: 12px; color: var(--halvany); }
 
-.hasonlo-kartya i {
